@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>معرض المانجا</title>
+<style>
+body{margin:0;background:#fff;font-family:sans-serif}
+h1{text-align:center;margin:10px;font-size:18px}
+#q{display:block;width:90%;margin:6px auto;padding:9px;font-size:15px;border:2px solid #111;box-sizing:border-box}
+#st{text-align:center;font-size:12px;padding:8px;background:#111;color:#fff}
+#g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:4px}
+.c{text-align:center}
+.c svg{width:100%;height:auto;display:block}
+button{padding:5px 8px;background:#fff;color:#111;border:1.5px solid #111;font-size:11px;margin-bottom:10px}
+</style></head><body>
+<h1 id="t"></h1>
+<input id="q" placeholder="ابحث بالاسم... Naruto" oninput="fl(this.value)">
+<div id="st"></div>
+<div id="g"></div>
+<script>
+const D="Naruto,0,1,1,4;Sasuke,0,0,1,0;Kakashi,0,2,1,0;Itachi,1,0,1,0;Sakura,2,1,1,1;Hinata,1,0,1,4;Jiraiya,1,2,1,2;Gaara,0,1,6,0;Luffy,2,0,2,4;Zoro,0,1,5,2;Nami,7,1,0,1;Sanji,7,1,0,1;Chopper,2,0,2,4;Robin,1,0,0,1;Ace,2,0,2,4;Shanks,7,1,0,0;Goku,0,0,5,2;Vegeta,0,0,0,3;Gohan,0,0,0,1;Trunks,7,1,0,3;Piccolo,6,0,0,0;Frieza,6,2,0,3;Bulma,7,1,3,1;Krillin,6,2,6,2;Ichigo,0,1,0,0;Rukia,2,0,0,0;Byakuya,1,0,4,2;Aizen,7,0,0,2;Renji,1,1,1,0;Toshiro,0,2,0,0;Eren,7,0,0,5;Mikasa,2,0,7,5;Armin,2,1,0,5;Levi,2,0,7,5;Erwin,7,1,0,5;Hange,4,0,0,5;Light Yagami,7,0,0,1;L,5,0,0,4;Ryuk,5,0,0,0;Misa,3,1,3,1;Edward Elric,4,1,0,0;Alphonse,6,2,0,3;Roy Mustang,0,0,0,0;Riza,4,1,0,0;Tanjiro,0,0,6,2;Nezuko,1,0,3,2;Zenitsu,7,1,0,2;Inosuke,0,0,0,3;Rengoku,5,1,1,2;Shinobu,4,0,3,2;Giyu,2,0,0,2;Muzan,7,0,2,0;Deku,0,0,0,1;Bakugo,0,1,0,4;Todoroki,7,2,0,4;All Might,0,1,0,0;Uraraka,2,0,0,1;Gon,0,0,2,4;Killua,0,2,0,4;Kurapika,7,1,1,0;Leorio,7,0,0,0;Hisoka,7,1,6,4;Meliodas,0,1,0,3;Ban,0,2,1,5;Elizabeth,1,2,3,1;Natsu,0,1,7,2;Lucy,3,1,3,1;Erza,1,0,0,3;Gray,0,0,0,4;Asta,0,2,5,4;Yuno,2,1,0,2;Gojo,0,2,5,0;Yuji,0,1,0,0;Sukuna,0,1,0,2;Megumi,0,0,0,0;Nobara,2,0,0,1;Denji,2,1,0,1;Makima,2,1,0,1;Power,5,1,0,4;Aki,7,0,0,1;Anya,3,0,3,1;Loid,7,1,0,0;Yor,1,0,3,0;Spike Spiegel,7,0,0,0;Saitama,6,2,7,4;Genos,2,1,0,3;Mob,2,0,0,1;Rimuru,1,1,0,2;Senku,0,2,0,4;Kaneki,7,2,0,0;Lelouch,7,0,0,0;Suzaku,0,0,0,0;Violet Evergarden,4,1,3,1;Sailor Moon,3,1,6,1;Shinchan,2,0,0,4;Conan,2,0,0,1;Kenshin,1,0,0,2;Alucard,7,0,2,0;Guts,0,2,0,3;Griffith,7,2,0,3";
+const D2="Usopp,2,0,5,4;Franky,0,1,0,2;Brook,2,0,2,0;Law,2,0,2,4;Boa Hancock,1,0,4,2;Crocodile,7,0,0,0;Mihawk,7,0,2,0;Whitebeard,1,2,2,3;Kaido,1,0,0,2;Big Mom,5,1,2,2;Blackbeard,5,0,2,0;Sabo,7,1,2,0;Jinbe,6,0,0,2;Doflamingo,0,2,0,5;Buggy,5,0,5,2;Smoker,6,2,0,0;Vivi,1,1,0,1;Tsunade,3,1,6,1;Minato,0,1,1,0;Obito,0,0,0,0;Madara,5,0,0,3;Neji,1,0,1,2;Rock Lee,2,0,1,4;Tenten,4,0,0,1;Shikamaru,0,0,1,0;Choji,2,1,1,3;Ino,1,2,0,1;Kiba,0,1,0,4;Shino,2,0,0,4;Orochimaru,1,0,0,2;Pain,0,1,1,0;Konan,2,0,3,0;Deidara,1,2,1,0;Sasori,0,1,0,0;Kisame,0,0,1,0;Hashirama,1,0,0,3;Tobirama,0,2,1,3;Ulquiorra,7,0,0,0;Gin,2,2,0,2;Kenpachi,0,0,0,3;Yoruichi,1,0,1,1;Orihime,1,1,3,1;Chad,2,0,0,4;Uryu,7,0,0,0;Grimmjow,0,1,0,0;Mayuri,6,2,0,2;Unohana,1,0,0,2;Reiner,2,2,0,5;Bertholdt,2,0,0,5;Zeke,7,2,0,5;Historia,1,2,0,5;Jean,7,1,0,5;Connie,6,0,0,5;Sasha,4,1,0,5;Annie,4,2,0,5;Pieck,2,0,0,5;Cell,6,1,0,3;Majin Buu,6,1,6,4;Beerus,6,1,0,2;Whis,0,2,0,2;Tien,6,0,1,2;Yamcha,1,0,0,2;Android 18,2,2,0,1;Goten,0,0,0,2;Broly,5,0,1,3;Jiren,6,1,0,3;Videl,3,0,3,1;Aoi Todo,0,0,1,0;Kento Nanami,7,2,0,0;Maki,4,0,0,1;Toge,0,2,0,0;Geto,4,0,0,2;Mahito,2,1,0,1;Choso,1,0,3,2;Yuta,7,0,0,0;Mei Mei,1,0,3,0;Higuruma,2,0,0,0;Kanao,3,0,3,1;Tengen,1,2,1,2;Mitsuri,3,1,3,2;Obanai,7,0,0,0;Sanemi,0,2,0,0;Muichiro,1,1,0,2;Gyomei,6,0,0,2;Akaza,0,1,0,2;Doma,7,2,0,2;Kokushibo,1,0,0,2;Genya,0,2,0,0;Shinso,0,1,0,4;Mirio,0,2,0,3;Tokoyami,2,0,0,0;Iida,7,0,0,3;Tsuyu,1,0,3,1;Mineta,2,0,0,1;Endeavor,0,2,0,3;Hawks,7,2,0,0;Shigaraki,0,1,0,0;Dabi,0,0,0,0;Toga,4,2,0,1;Overhaul,7,0,0,0;Chrollo,7,0,0,0;Netero,6,2,0,2;Illumi,1,0,0,2;Meruem,5,2,4,3;Kite,2,2,0,0;Feitan,2,0,5,4;Kobeni,2,0,0,1;Himeno,7,0,0,1;Angel Devil,2,2,0,1;Kishibe,7,0,0,0;Reze,4,0,0,1;Wendy,3,0,0,1;Laxus,0,2,0,5;Juvia,1,0,0,1;Gajeel,0,0,0,4;Mirajane,1,2,3,1;Noelle,3,2,0,1;Yami Sukehiro,0,0,5,5;Julius,7,2,0,2;Mimosa,1,2,0,1;Diane,3,0,0,1;King,0,2,0,4;Gowther,7,1,0,2;Escanor,7,2,0,3;Merlin,1,2,3,1;Winry,4,1,5,1;Scar,6,0,5,2;Greed,0,0,0,0;Olivier Armstrong,1,2,0,5;Near,2,2,0,4;Mello,7,1,0,0;Rem,1,2,4,2;C.C.,1,1,0,4;Kallen,7,0,0,1;Shinji,2,0,0,1;Rei,2,1,0,1;Asuka,3,0,3,1;Kaworu,2,2,0,1;Gendo,7,0,0,0;Rin Okumura,0,0,0,0;Yusuke Urameshi,0,0,0,0;Hiei,0,0,1,0;Kuwabara,0,1,0,0;Kurama,1,0,0,2;Inuyasha,1,2,0,2;Sesshomaru,1,2,6,3;Kagome,1,0,3,1;Vash,0,1,0,0;Hinata Shoyo,0,1,0,4;Kageyama,2,0,0,4";
+const C=(D+";"+D2).split(";").map(x=>{const p=x.split(",");return[p[0],+p[1],+p[2],+p[3],+p[4]]});
+
+const SP="M92 135L78 68L106 88L110 36L134 76L150 24L166 76L190 36L194 88L222 66L208 135Q150 92 92 135Z";
+const BW="M94 135Q92 66 150 62Q208 66 206 135Q150 106 94 135Z";
+const HS=[
+{F:[SP],B:[],L:60,W:115},
+{F:["M96 132Q98 58 150 56Q202 58 204 132Q150 96 96 132Z"],B:["M96 118Q74 230 98 310Q116 240 110 150Z","M204 118Q226 230 202 310Q184 240 190 150Z"],L:250,W:120},
+{F:[BW],B:[],L:75,W:110},
+{F:[BW],B:["M100 100Q44 130 52 270Q82 200 108 140Z","M200 100Q256 130 248 270Q218 200 192 140Z"],L:75,W:110},
+{F:[BW,"M128 50a22 22 0 1 0 44 0a22 22 0 1 0 -44 0Z"],B:[],L:75,W:110},
+{F:[SP],B:["M96 120L56 290L100 246L108 322L136 250L150 330L166 250L194 322L200 246L244 290L204 120Z"],L:250,W:120},
+{F:[],B:[],L:0,W:0},
+{F:["M94 135Q96 62 156 58Q214 64 206 135Q182 94 134 122Q114 134 94 135Z","M134 120Q118 156 128 186Q142 154 150 124Z"],B:["M96 120Q68 200 88 270Q108 200 112 150Z"],L:150,W:110}];
+
+function hr(paths,s,h,id){
+ if(!paths.length)return '';
+ const S=HS[h],fill=s==0?'#111':'#fff';
+ const cp='<clipPath id="'+id+'">'+paths.map(p=>'<path d="'+p+'"/>').join('')+'</clipPath>';
+ const sh=paths.map(p=>'<path data-part="hair" d="'+p+'" fill="'+fill+'"/>').join('');
+ const n=s==1?34:s==0?14:16;let st='';
+ for(let k=0;k<n;k++){
+  const u=(k/(n-1)-0.5)*2,ex=150+u*S.W,ey=62+55+(S.L-55)*Math.pow(Math.abs(u),1.5)+(k%3)*6;
+  st+='<path data-part="hair" d="M150 62Q'+(150+u*S.W*0.35)+' '+(62+(ey-62)*0.15)+' '+ex+' '+ey+'"/>';
+ }
+ return cp+sh+'<g clip-path="url(#'+id+')" fill="none" stroke="'+(s==0?'#fff':'#111')+'" stroke-width="'+(s==0?1.3:1.5)+'">'+st+'</g>';
+}
+const FL='<path data-part="torso" d="M126 240L84 262L96 300L140 264Z" fill="#fff"/><path data-part="torso" d="M174 240L216 262L204 300L160 264Z" fill="#fff"/>';
+const OF=[
+FL+'<path data-part="torso" d="M126 246L150 300L174 246" fill="#111"/>',
+FL+'<path data-part="torso" d="M143 262L157 262L162 332L150 344L138 332Z" fill="#111"/>',
+'<path data-part="torso" d="M126 240L150 316L174 240M114 252L150 336L186 252" fill="none" stroke-width="4"/>',
+'<path data-part="torso" d="M116 240Q150 262 184 240L196 270Q150 296 104 270Z" fill="#111"/><path data-part="torso" d="M104 304H196M98 334H202" fill="none" stroke-width="4"/>',
+'<path data-part="torso" d="M110 236Q150 270 190 236L206 300Q150 332 94 300Z" fill="#fff"/><path data-part="torso" d="M140 272V322M160 272V322" fill="none" stroke-width="3"/>',
+FL+'<path data-part="torso" d="M98 312H202M98 334H202" fill="none" stroke-width="7"/>'];
+const AC=[
+'',
+'<rect data-part="acc" x="98" y="92" width="104" height="12" fill="#111"/><rect data-part="acc" x="138" y="89" width="24" height="18" fill="#fff"/>',
+'<ellipse data-part="acc" cx="150" cy="72" rx="70" ry="11" fill="#111"/><path data-part="acc" d="M102 72Q150 0 198 72Z" fill="#111"/>',
+'<path data-part="acc" d="M196 80L232 60L232 100ZM196 80L170 60L170 100Z" fill="#111"/>',
+'<path data-part="acc" d="M112 78L118 44L134 64L150 38L166 64L182 44L188 78Z" fill="#fff"/>',
+'<path data-part="acc" d="M96 90Q150 70 204 90L204 106Q150 88 96 106Z" fill="#111"/><path data-part="acc" d="M204 94L236 84L230 116Z" fill="#111"/>',
+'<circle data-part="acc" cx="150" cy="102" r="6" fill="#111"/>',
+'<path data-part="acc" d="M118 238Q150 262 182 238L190 266Q150 292 110 266Z" fill="#111"/><path data-part="acc" d="M176 266L206 340L182 332Z" fill="#111"/>'];
+
+function draw(c,i){
+ const[n,h,s,a,o]=c,S=HS[h];
+ const fs=Math.min(34,260/n.length*1.9);
+ return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 390" width="300" height="390">'+
+ '<rect width="300" height="390" fill="#fff"/>'+
+ '<g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">'+
+ hr(S.B,s,h,'b'+i)+
+ '<path data-part="neck" d="M126 195L124 245L176 245L174 195Z" fill="#fff"/>'+
+ OF[o]+
+ '<path data-part="neck" d="M116 222Q150 240 184 222Q150 230 116 222Z" fill="#111"/>'+
+ '<path data-part="head" d="M100 118Q100 84 150 84Q200 84 200 118L198 158Q190 206 150 216Q110 206 102 158Z" fill="#fff"/>'+
+ (h==6?'<path data-part="hair" d="M110 96Q150 74 190 96" fill="none" stroke-width="2"/>':'')+
+ hr(S.F,s,h,'f'+i)+AC[a]+'</g>'+
+ '<text data-part="label" x="150" y="378" text-anchor="middle" font-family="\'Segoe Script\',\'Brush Script MT\',\'Lucida Handwriting\',cursive" font-style="italic" font-weight="bold" font-size="'+fs+'" fill="#111">'+n+'</text></svg>';
+}
+const g=document.getElementById('g');
+document.getElementById('t').textContent='معرض المانجا ('+C.length+' شخصية)';
+g.innerHTML=C.map((c,i)=>'<div class="c" data-n="'+c[0].toLowerCase()+'">'+draw(c,i)+'<button onclick="dl('+i+')">تحميل</button></div>').join('');
+function fl(v){
+ v=v.trim().toLowerCase();
+ document.querySelectorAll('.c').forEach(d=>d.style.display=d.dataset.n.includes(v)?'':'none');
+}
+function dl(i){
+ const s=new XMLSerializer().serializeToString(document.querySelectorAll('.c svg')[i]);
+ const img=new Image();
+ img.onload=()=>{
+  const cv=document.createElement('canvas');cv.width=900;cv.height=1170;
+  const x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,900,1170);x.drawImage(img,0,0,900,1170);
+  cv.toBlob(b=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=C[i][0]+'.png';a.click()});
+ };
+ img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);
+}
+// فحص التأكد من الحذف
+const banned=['eye','mouth','nose','ear','shoulder','leg','hand','arm'];
+const parts=[...document.querySelectorAll('[data-part]')].map(e=>e.dataset.part);
+const bad=parts.filter(p=>banned.includes(p)).length;
+document.getElementById('st').innerHTML=(bad===0?'✅ تم الفحص: ':'❌ فيه مشكلة: ')+
+ C.length+' صورة | عين/فم/أنف/أذن/كتف/رجل/إيد = '+bad+'<br>الأجزاء الموجودة بس: '+[...new Set(parts)].join(' / ');
+</script></body></html>
